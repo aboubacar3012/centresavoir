@@ -159,7 +159,7 @@ const LanguesTab = () => {
             </div>
 
             <div className="mt-4 text-sm text-gray-500">
-              Ce programme complet combine l'apprentissage spirituel et les compétences linguistiques et informatiques.
+              Ce programme complet combine l&apos;apprentissage spirituel et les compétences linguistiques et informatiques.
             </div>
           </div>
         </div>
