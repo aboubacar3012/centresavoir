@@ -7,9 +7,39 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { LucideIcon } from "lucide-react";
+
+// Interface pour les formations
+interface Formation {
+  title: string;
+  price: string;
+  duration: string;
+  icon: LucideIcon;
+  bgColor: string;
+}
+
+// Interface pour les props de FormationLine
+interface FormationLineProps {
+  title: string;
+  price: string;
+  duration: string;
+  icon: LucideIcon;
+  bgColor: string;
+}
+
+// Interface pour les props de FormationSection
+interface FormationSectionProps {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  formations: Formation[];
+  imageSrc: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}
 
 // Composant pour chaque formation en format ligne
-const FormationLine = ({ title, price, duration, icon: Icon, bgColor }) => (
+const FormationLine = ({ title, price, duration, icon: Icon, bgColor }: FormationLineProps) => (
   <div className={`border-l-4 ${bgColor.replace('bg-gradient-to-r', 'border-l')} bg-white hover:bg-gray-50 p-3 rounded-md shadow-sm hover:shadow transition-all flex justify-between items-center`}>
     <div className="flex items-center">
       <Icon className={`h-4 w-4 mr-3 ${bgColor.includes('from-blue') ? 'text-blue-600' : bgColor.includes('from-green') ? 'text-green-600' : 'text-indigo-600'}`} />
@@ -29,7 +59,7 @@ const FormationLine = ({ title, price, duration, icon: Icon, bgColor }) => (
 );
 
 // Composant retravaillé pour chaque section de formation en accordéon
-const FormationSection = ({ title, description, icon: Icon, formations, imageSrc, isOpen, onToggle }) => {
+const FormationSection = ({ title, description, icon: Icon, formations, imageSrc, isOpen, onToggle }: FormationSectionProps) => {
   return (
     <div className="mb-6 border border-indigo-100 rounded-xl overflow-hidden shadow-sm">
       {/* En-tête cliquable */}
@@ -87,7 +117,7 @@ const FormationSection = ({ title, description, icon: Icon, formations, imageSrc
               </div>
               
               <div className="space-y-2">
-                {formations.map((formation, index) => (
+                {formations.map((formation: Formation, index: number) => (
                   <FormationLine
                     key={index}
                     title={formation.title}
@@ -111,14 +141,14 @@ const InformatiqueTab = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Fonction pour gérer le clic sur un accordéon
-  const handleToggle = (index) => {
+  const handleToggle = (index: number) => {
     setActiveIndex(prevIndex => prevIndex === index ? -1 : index);
     // Si on clique sur l'accordéon déjà ouvert, on le ferme
     // Sinon on ouvre celui sur lequel on a cliqué
   };
 
   // Définition des formations de base
-  const formationsBase = [
+  const formationsBase: Formation[] = [
     {
       title: "Microsoft Windows",
       price: "100.000",
@@ -150,7 +180,7 @@ const InformatiqueTab = () => {
   ];
 
   // Définition des formations avancées
-  const formationsAvancees = [
+  const formationsAvancees: Formation[] = [
     {
       title: "Microsoft Excel Avancé",
       price: "150.000",
@@ -189,7 +219,7 @@ const InformatiqueTab = () => {
   ];
 
   // Définition des formations spécialisées
-  const formationsSpecialisees = [
+  const formationsSpecialisees: Formation[] = [
     {
       title: "Maintenance (Matérielle & Logicielle)",
       price: "200.000",

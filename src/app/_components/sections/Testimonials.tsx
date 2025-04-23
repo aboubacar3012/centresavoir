@@ -47,7 +47,7 @@ const Testimonials = () => {
 
   // Autoplay functionality
   useEffect(() => {
-    let interval;
+    let interval: NodeJS.Timeout | undefined;
     if (isAutoplay && isInView) {
       interval = setInterval(() => {
         setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -67,7 +67,7 @@ const Testimonials = () => {
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const selectTestimonial = (idx) => {
+  const selectTestimonial = (idx: number) => {
     setIsAutoplay(false);
     setActiveTestimonial(idx);
   };
@@ -96,7 +96,7 @@ const Testimonials = () => {
       transition: {
         duration: 6,
         repeat: Infinity,
-        repeatType: "mirror",
+        repeatType: "mirror" as const,
         ease: "easeInOut"
       }
     }
@@ -152,7 +152,7 @@ const Testimonials = () => {
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <div className="inline-flex items-center justify-center mb-4 px-4 py-2 bg-blue-100/30 backdrop-blur-sm rounded-full">
             <MessageSquare className="w-4 h-4 mr-2 text-blue-600" />
-            <span className="text-blue-800 font-medium text-sm">Retours d'expérience</span>
+            <span className="text-blue-800 font-medium text-sm">Retours d&apos;expérience</span>
           </div>
           
           <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-indigo-600">
@@ -289,7 +289,7 @@ const Testimonials = () => {
                               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
                               
                               <p className="text-gray-700 leading-relaxed italic text-lg">
-                                &quot;{testimonial.content.replace(/'/g, "&apos;")}&quot;
+                                &quot;{testimonial.content.replace(/'/g, "&#39;")}&quot;
                               </p>
                             </div>
                           </div>

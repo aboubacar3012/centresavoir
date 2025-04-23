@@ -3,7 +3,27 @@ import { motion } from "framer-motion";
 import { Globe, Book, FileText, Award, Users } from "lucide-react";
 import Image from "next/image";
 
-const LangueCard = ({ langue, description, tarif, duree, imageSrc, color }) => {
+// Interface pour les props du composant LangueCard
+interface LangueCardProps {
+  langue: string;
+  description: string;
+  tarif: string;
+  duree: string;
+  imageSrc: string;
+  color: string;
+}
+
+// Interface pour les données de langue
+interface Langue {
+  langue: string;
+  description: string;
+  tarif: string;
+  duree: string;
+  imageSrc: string;
+  color: string;
+}
+
+const LangueCard = ({ langue, description, tarif, duree, imageSrc, color }: LangueCardProps) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all">
       <div className="relative h-36 w-full overflow-hidden">
@@ -47,7 +67,7 @@ const LangueCard = ({ langue, description, tarif, duree, imageSrc, color }) => {
 };
 
 const LanguesTab = () => {
-  const langues = [
+  const langues: Langue[] = [
     {
       langue: "Anglais",
       description: "Trois niveaux : Débutant, Moyen et Avancé",
