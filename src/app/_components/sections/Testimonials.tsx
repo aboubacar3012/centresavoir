@@ -1,6 +1,6 @@
-"use client";
+"use client";;
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
 import Image from "next/image";
 
@@ -8,6 +8,7 @@ const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
   const sectionRef = useRef(null);
+  const carouselRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
   
   // Testimonials data with enhanced profiles
@@ -18,7 +19,8 @@ const Testimonials = () => {
       role: "Ancienne étudiante et professeure d'informatique",
       location: "France",
       content: "Après avoir acquis une solide formation en informatique de base (Pack office), j'ai été coopté pour donner cours dans ces programmes pendant 2 ans. Ce fut un grand plaisir pour moi d'avoir été formé et avoir formé dans cet Institut. L'ambiance qui y règne est favorable à un apprentissage de qualité. Grâce à cette expérience, je suis aujourd'hui autonome dans le cadre de mes démarches où presque tout se fait sur internet. Se former au Centre du Savoir est synonyme de réussite.",
-      image: "/testimonials/profile-1.jpg",
+      // Using UI Avatars API directly instead of missing images
+      image: "https://ui-avatars.com/api/?name=DIALLO+D&background=0D8ABC&color=fff",
       color: "from-green-500 to-emerald-400"
     },
     {
@@ -27,7 +29,8 @@ const Testimonials = () => {
       role: "Ancienne étudiante et professeure d'informatique",
       location: "France", 
       content: "Après mes études universitaires, j'ai été recruté comme prestataire avant de suivre une formation en anglais et une formation des formateurs en informatique bureautique. Je suis actuellement étudiante en informatique en France. Cette expérience du Centre du Savoir m'a été d'une grande utilité. J'encourage sincèrement ceux qui aspirent à une bonne formation en langues et en informatique à se tourner vers l'Institut Centre du Savoir qui est une référence pour beaucoup de jeunes guinéens.",
-      image: "/testimonials/profile-2.jpg",
+      // Using UI Avatars API directly instead of missing images
+      image: "https://ui-avatars.com/api/?name=Madina+Diakité&background=1D4ED8&color=fff",
       color: "from-blue-500 to-indigo-400"
     },
     {
@@ -36,7 +39,8 @@ const Testimonials = () => {
       role: "Étudiant en LEA (Langues étrangères appliquées)",
       location: "Université Paris Nanterre",
       content: "J'ai été formé en informatique bureautique à l'Institut Technique et Professionnel Privé – Centre du Savoir, puis recruté comme professeur d'anglais. Le fait d'avoir enseigné la langue anglaise m'a permis de rehausser mon niveau et d'obtenir une admission en France. Je vous conseille de profiter du Centre du Savoir car la formation est de qualité.",
-      image: "/testimonials/profile-3.jpg",
+      // Using UI Avatars API directly instead of missing images
+      image: "https://ui-avatars.com/api/?name=DIALLO+Boubacar&background=7E22CE&color=fff",
       color: "from-purple-500 to-violet-400"
     }
   ];
@@ -66,19 +70,6 @@ const Testimonials = () => {
   const selectTestimonial = (idx) => {
     setIsAutoplay(false);
     setActiveTestimonial(idx);
-  };
-
-  // Card position calculations for 3D carousel effect
-  const getCardStyles = (idx) => {
-    const diff = (idx - activeTestimonial + testimonials.length) % testimonials.length;
-    if (diff === 0) return { zIndex: 30, opacity: 1, scale: 1, x: 0 }; // Active
-    if (diff === 1 || diff === testimonials.length - 1) return {
-      zIndex: 20,
-      opacity: 0.7,
-      scale: 0.9,
-      x: diff === 1 ? 150 : -150,
-    };
-    return { zIndex: 10, opacity: 0, scale: 0.8, x: 0 };
   };
 
   // Animation variants
@@ -115,7 +106,7 @@ const Testimonials = () => {
     <section 
       id="testimonials" 
       ref={sectionRef}
-      className="py-24 relative overflow-hidden bg-[#f8fafc]"
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-[#f8fafc] to-[#f0f4f8]"
     >
       {/* Animated background elements */}
       <motion.div
@@ -152,7 +143,7 @@ const Testimonials = () => {
       </motion.div>
       
       <motion.div 
-        className="container mx-auto px-6 relative z-10"
+        className="container mx-auto px-4 sm:px-6 relative z-10"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -186,61 +177,86 @@ const Testimonials = () => {
           </motion.p>
         </motion.div>
 
-        {/* 3D Carousel System */}
-        <div className="relative max-w-6xl mx-auto">
-          {/* Navigation buttons */}
-          <div className="absolute z-40 top-1/2 -translate-y-1/2 left-0 md:-left-10 lg:-left-16">
-            <button 
-              onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-blue-50 transition-colors group border border-gray-100"
-              aria-label="Témoignage précédent"
-            >
-              <ChevronLeft className="w-6 h-6 text-blue-600 group-hover:-translate-x-0.5 transition-transform" />
-            </button>
-          </div>
+        {/* Modern Horizontal Carousel */}
+        <div className="relative max-w-7xl mx-auto px-4">
+          {/* Large navigation buttons */}
+          <button 
+            onClick={handlePrev}
+            className="absolute z-40 top-1/2 -translate-y-1/2 -left-5 md:-left-10 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/80 backdrop-blur-sm shadow-xl flex items-center justify-center hover:bg-blue-50 transition-all duration-300 group border border-gray-100"
+            aria-label="Témoignage précédent"
+          >
+            <ChevronLeft className="w-6 h-6 text-blue-600 group-hover:-translate-x-0.5 transition-transform" />
+          </button>
           
-          <div className="absolute z-40 top-1/2 -translate-y-1/2 right-0 md:-right-10 lg:-right-16">
-            <button 
-              onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-blue-50 transition-colors group border border-gray-100"
-              aria-label="Témoignage suivant"
-            >
-              <ChevronRight className="w-6 h-6 text-blue-600 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </div>
+          <button 
+            onClick={handleNext}
+            className="absolute z-40 top-1/2 -translate-y-1/2 -right-5 md:-right-10 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/80 backdrop-blur-sm shadow-xl flex items-center justify-center hover:bg-blue-50 transition-all duration-300 group border border-gray-100"
+            aria-label="Témoignage suivant"
+          >
+            <ChevronRight className="w-6 h-6 text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+          </button>
           
-          {/* Testimonial cards with 3D effect */}
-          <div className="relative h-[500px] md:h-[400px] perspective-1000">
-            <div className="absolute w-full h-full">
-              <AnimatePresence>
-                {testimonials.map((testimonial, idx) => (
-                  <motion.div
-                    key={testimonial.id}
-                    className="absolute top-0 left-0 w-full transform-gpu"
-                    initial={getCardStyles((activeTestimonial + 1) % testimonials.length)}
-                    animate={getCardStyles(idx)}
-                    exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30,
-                      mass: 1,
-                    }}
-                  >
-                    <div 
-                      className={`bg-white rounded-2xl shadow-xl p-8 md:p-10 overflow-hidden border border-gray-100 
-                        ${idx === activeTestimonial ? 'testimonial-active' : 'testimonial-inactive'}`}
-                    >
-                      <div className="md:flex items-start gap-6">
-                        {/* Profile section */}
-                        <div className="md:w-1/3 mb-6 md:mb-0 flex flex-col items-center md:items-start">
-                          <div className="relative w-20 h-20 md:w-24 md:h-24 mb-4">
-                            {/* Glow effect behind image */}
-                            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${testimonial.color} blur-md opacity-30`}></div>
-                            
-                            {/* Profile image */}
-                            <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-white shadow-md">
-                              <div className="w-full h-full relative">
+          {/* Carousel container with overflow */}
+          <div className="overflow-hidden" ref={carouselRef}>
+            <motion.div 
+              className="flex"
+              animate={{ x: `-${activeTestimonial * 100}%` }}
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(e, { offset }) => {
+                setIsAutoplay(false);
+                const swipe = offset.x;
+                if (swipe < -70) {
+                  handleNext();
+                } else if (swipe > 70) {
+                  handlePrev();
+                }
+              }}
+            >
+              {testimonials.map((testimonial) => (
+                <motion.div
+                  key={testimonial.id}
+                  className="min-w-full px-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-500 h-full">
+                    <div className="relative">
+                      {/* Decorative gradient top bar */}
+                      <div className={`h-2 w-full bg-gradient-to-r ${testimonial.color}`}></div>
+                      
+                      <div className="p-8 md:p-10">
+                        {/* Quote icon with gradient background */}
+                        <div className="absolute top-8 right-10">
+                          <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.color} opacity-10 flex items-center justify-center`}>
+                            <Quote className="w-6 h-6 text-blue-700 opacity-70" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row gap-8 items-start">
+                          {/* Profile section */}
+                          <div className="md:w-1/4 flex flex-col items-center md:items-start">
+                            <div className="relative w-24 h-24 md:w-28 md:h-28 mb-4">
+                              {/* Animated glow effect */}
+                              <motion.div 
+                                className={`absolute inset-0 rounded-full bg-gradient-to-br ${testimonial.color} blur-md opacity-30`}
+                                animate={{ 
+                                  scale: [1, 1.05, 1],
+                                  opacity: [0.3, 0.5, 0.3]
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  repeatType: "reverse"
+                                }}
+                              ></motion.div>
+                              
+                              {/* Profile image */}
+                              <div className="absolute inset-0 rounded-full overflow-hidden border-4 border-white shadow-md">
                                 <Image
                                   src={testimonial.image} 
                                   alt={testimonial.name}
@@ -252,59 +268,62 @@ const Testimonials = () => {
                                 />
                               </div>
                             </div>
+                            
+                            <div className="text-center md:text-left">
+                              <h4 className="font-bold text-xl text-gray-900">{testimonial.name}</h4>
+                              <p className="text-sm text-blue-600 font-medium">{testimonial.role}</p>
+                              <p className="text-xs text-gray-500 mt-1">{testimonial.location}</p>
+                              
+                              <div className="flex mt-3 justify-center md:justify-start gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                                ))}
+                              </div>
+                            </div>
                           </div>
                           
-                          <div className="text-center md:text-left">
-                            <h4 className="font-bold text-xl text-gray-900">{testimonial.name}</h4>
-                            <p className="text-sm text-blue-600">{testimonial.role}</p>
-                            <p className="text-xs text-gray-500">{testimonial.location}</p>
-                            
-                            <div className="flex mt-3 justify-center md:justify-start">
-                              {[...Array(5)].map((_, i) => (
-                                <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                              ))}
+                          {/* Testimonial content */}
+                          <div className="md:w-3/4 flex-1">
+                            <div className="bg-blue-50/50 rounded-2xl p-6 md:p-8 relative backdrop-blur-sm">
+                              {/* Decorative elements */}
+                              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
+                              
+                              <p className="text-gray-700 leading-relaxed italic text-lg">
+                                &quot;{testimonial.content.replace(/'/g, "&apos;")}&quot;
+                              </p>
                             </div>
-                          </div>
-                        </div>
-                        
-                        {/* Testimonial content */}
-                        <div className="md:w-2/3 flex-1">
-                          <div className="bg-blue-50/50 rounded-2xl p-6 relative">
-                            {/* Quote icon */}
-                            <div className="absolute top-4 left-4">
-                              <Quote className="w-6 h-6 text-blue-300/50" />
-                            </div>
-                            
-                            {/* Decorative elements */}
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
-                            
-                            <p className="text-gray-700 leading-relaxed pt-4 italic">
-                              "{testimonial.content}"
-                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
           
-          {/* Navigation dots */}
-          <div className="flex justify-center space-x-2 mt-8">
-            {testimonials.map((testimonial, idx) => (
+          {/* Modern pagination indicators */}
+          <div className="flex justify-center items-center space-x-3 mt-10">
+            {testimonials.map((_, idx) => (
               <button
-                key={testimonial.id}
-                className={`relative transition-all duration-300 focus:outline-none`}
+                key={idx}
                 onClick={() => selectTestimonial(idx)}
-                aria-label={`View testimonial from ${testimonial.name}`}
+                className="group focus:outline-none"
+                aria-label={`Voir témoignage ${idx + 1}`}
               >
-                <span className="block w-3 h-3 rounded-full border border-blue-200"></span>
-                <span 
-                  className={`absolute inset-0 w-full h-full rounded-full bg-blue-600 transform scale-0 
-                    ${activeTestimonial === idx ? 'animate-dot-scale' : ''}`}
-                ></span>
+                <div className="w-16 h-2 rounded-full overflow-hidden bg-gray-200 relative">
+                  <motion.div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 to-indigo-600"
+                    initial={{ width: 0 }}
+                    animate={{ 
+                      width: activeTestimonial === idx ? '100%' : '0%',
+                      transition: {
+                        duration: activeTestimonial === idx && isAutoplay ? 5 : 0.5,
+                        ease: 'easeInOut'
+                      }
+                    }}
+                  />
+                </div>
               </button>
             ))}
           </div>
@@ -313,26 +332,26 @@ const Testimonials = () => {
       
       {/* Custom CSS for animations */}
       <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
+        @keyframes shine {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(200%); }
         }
         
-        .testimonial-active {
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .testimonial-inactive {
-          filter: saturate(0.8);
-        }
-        
-        @keyframes dotScale {
-          0% { transform: scale(0); }
-          50% { transform: scale(1); }
-          100% { transform: scale(0.7); }
-        }
-        
-        .animate-dot-scale {
-          animation: dotScale 0.5s forwards;
+        .testimonial-shine:hover:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 200%;
+          height: 100%;
+          background: linear-gradient(
+            to right, 
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0.2) 50%,
+            rgba(255,255,255,0) 100%
+          );
+          transform: translateX(-100%);
+          animation: shine 2s infinite;
         }
       `}</style>
     </section>

@@ -29,7 +29,7 @@ const AutresFormationsTab = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-600/70 to-indigo-900/90 flex items-center justify-center">
               <div className="text-white text-center px-6">
                 <h4 className="text-xl font-bold mb-2">Formation Diplômante</h4>
-                <p>Obtenez un diplôme reconnu après 3 ans d'études</p>
+                <p>Obtenez un diplôme reconnu après 3 ans d&apos;études</p>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@ const AutresFormationsTab = () => {
         </div>
         
         <div className="mt-8 bg-blue-50 border border-blue-100 rounded-lg p-4 text-blue-800">
-          <p className="text-sm">Pour plus d'informations sur nos services médicaux, n'hésitez pas à contacter notre équipe spécialisée.</p>
+          <p className="text-sm">Pour plus d&apos;informations sur nos services médicaux, n&apos;hésitez pas à contacter notre équipe spécialisée.</p>
         </div>
       </div>
     </motion.div>

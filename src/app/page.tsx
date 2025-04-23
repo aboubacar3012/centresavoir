@@ -1,15 +1,14 @@
 "use client";
 
 // Import des composants
-import { 
-  Hero, 
+import {
+  Hero,
   About,
-  DirectorMessage,
-  Testimonials, 
+  Testimonials,
   Formations,
   Contact,
   Footer,
-  ParticlesBackground
+  ParticlesBackground,
 } from "./_components";
 
 export default function Home() {
@@ -20,9 +19,8 @@ export default function Home() {
       
       <Hero />
       <About />
-      <DirectorMessage />
-      <Testimonials />
       <Formations />
+      <Testimonials />
       <Contact />
       <Footer />
     </div>

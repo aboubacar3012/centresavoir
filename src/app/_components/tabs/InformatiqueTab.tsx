@@ -1,74 +1,122 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Monitor, Cpu, Database, BarChart, Layers, Terminal, Gauge, Clock, CreditCard, 
   BookOpen, Award, PenTool, MonitorSmartphone, FileCode, HardDrive, Network, DollarSign,
-  Globe, Lightbulb, Plane
+  Globe, Lightbulb, Plane, ChevronDown, ChevronUp
 } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
-// Composant pour chaque carte de formation
-const FormationCard = ({ title, price, duration, icon: Icon, bgColor }) => (
-  <div className={`bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all ${bgColor}`}>
-    <div className="flex items-center mb-4">
-      <div className="bg-white/25 backdrop-blur-sm p-3 rounded-full mr-3">
-        <Icon className="h-5 w-5 text-white" />
-      </div>
-      <h4 className="font-semibold text-white">{title}</h4>
+// Composant pour chaque formation en format ligne
+const FormationLine = ({ title, price, duration, icon: Icon, bgColor }) => (
+  <div className={`border-l-4 ${bgColor.replace('bg-gradient-to-r', 'border-l')} bg-white hover:bg-gray-50 p-3 rounded-md shadow-sm hover:shadow transition-all flex justify-between items-center`}>
+    <div className="flex items-center">
+      <Icon className={`h-4 w-4 mr-3 ${bgColor.includes('from-blue') ? 'text-blue-600' : bgColor.includes('from-green') ? 'text-green-600' : 'text-indigo-600'}`} />
+      <h4 className="font-medium text-gray-800">{title}</h4>
     </div>
-    <div className="flex justify-between mt-4 text-white/90">
+    <div className="flex space-x-6 text-gray-600 text-sm">
       <div className="flex items-center">
-        <CreditCard className="h-4 w-4 mr-1 opacity-70" />
+        <CreditCard className="h-3.5 w-3.5 mr-1.5 opacity-70" />
         <span>{price}</span>
       </div>
       <div className="flex items-center">
-        <Clock className="h-4 w-4 mr-1 opacity-70" />
+        <Clock className="h-3.5 w-3.5 mr-1.5 opacity-70" />
         <span>{duration}</span>
       </div>
     </div>
   </div>
 );
 
-// Composant pour chaque section de formation
-const FormationSection = ({ title, description, icon: Icon, formations, imageSrc }) => (
-  <div className="mb-12">
-    <div className="flex items-center mb-6">
-      <div className="bg-indigo-100 p-2 rounded-full mr-3">
-        <Icon className="h-6 w-6 text-indigo-700" />
-      </div>
-      <h3 className="text-xl font-bold text-indigo-900">{title}</h3>
-    </div>
-
-    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-6">
-      <Image
-        src={imageSrc}
-        alt={title}
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/80 to-indigo-600/50 flex items-center">
-        <div className="p-6 text-white max-w-md">
-          <p className="text-lg">{description}</p>
+// Composant retravaillé pour chaque section de formation en accordéon
+const FormationSection = ({ title, description, icon: Icon, formations, imageSrc, isOpen, onToggle }) => {
+  return (
+    <div className="mb-6 border border-indigo-100 rounded-xl overflow-hidden shadow-sm">
+      {/* En-tête cliquable */}
+      <div 
+        className="flex justify-between items-center p-4 cursor-pointer bg-gradient-to-r from-indigo-50 to-white hover:from-indigo-100 transition-colors"
+        onClick={onToggle}
+      >
+        <div className="flex items-center">
+          <div className="bg-indigo-100 p-2 rounded-full mr-3">
+            <Icon className="h-6 w-6 text-indigo-700" />
+          </div>
+          <h3 className="text-xl font-bold text-indigo-900">{title}</h3>
+        </div>
+        <div className="bg-indigo-100 p-1.5 rounded-full">
+          {isOpen ? (
+            <ChevronUp className="h-5 w-5 text-indigo-700" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-indigo-700" />
+          )}
         </div>
       </div>
+      
+      {/* Contenu accordéon */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="relative h-40 w-full overflow-hidden">
+              <Image
+                src={imageSrc}
+                alt={title}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/80 to-indigo-600/50 flex items-center">
+                <div className="p-6 text-white max-w-md">
+                  <p className="text-lg">{description}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 p-5">
+              {/* En-têtes des colonnes */}
+              <div className="flex justify-between items-center mb-3 px-4 text-sm font-semibold text-gray-500">
+                <div>Nom de la formation</div>
+                <div className="flex space-x-6">
+                  <div className="w-24 text-center">Prix (FCFA)</div>
+                  <div className="w-24 text-center">Durée</div>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                {formations.map((formation, index) => (
+                  <FormationLine
+                    key={index}
+                    title={formation.title}
+                    price={formation.price}
+                    duration={formation.duration}
+                    icon={formation.icon}
+                    bgColor={formation.bgColor}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {formations.map((formation, index) => (
-        <FormationCard
-          key={index}
-          title={formation.title}
-          price={formation.price}
-          duration={formation.duration}
-          icon={formation.icon}
-          bgColor={formation.bgColor}
-        />
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 const InformatiqueTab = () => {
+  // État pour suivre l'accordéon actuellement ouvert (0 = premier accordéon ouvert par défaut)
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Fonction pour gérer le clic sur un accordéon
+  const handleToggle = (index) => {
+    setActiveIndex(prevIndex => prevIndex === index ? -1 : index);
+    // Si on clique sur l'accordéon déjà ouvert, on le ferme
+    // Sinon on ouvre celui sur lequel on a cliqué
+  };
+
   // Définition des formations de base
   const formationsBase = [
     {
@@ -218,6 +266,8 @@ const InformatiqueTab = () => {
         icon={BookOpen}
         formations={formationsBase}
         imageSrc="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
+        isOpen={activeIndex === 0}
+        onToggle={() => handleToggle(0)}
       />
 
       {/* Formations avancées */}
@@ -227,6 +277,8 @@ const InformatiqueTab = () => {
         icon={Award}
         formations={formationsAvancees}
         imageSrc="https://images.unsplash.com/photo-1519389950473-47ba0277781c"
+        isOpen={activeIndex === 1}
+        onToggle={() => handleToggle(1)}
       />
 
       {/* Formations spécialisées */}
@@ -236,6 +288,8 @@ const InformatiqueTab = () => {
         icon={Gauge}
         formations={formationsSpecialisees}
         imageSrc="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789"
+        isOpen={activeIndex === 2}
+        onToggle={() => handleToggle(2)}
       />
 
       <div className="mt-12 bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-xl border border-indigo-100">

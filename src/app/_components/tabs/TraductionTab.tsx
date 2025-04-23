@@ -58,7 +58,7 @@ const TraductionTab = () => {
             </div>
 
             <div className="mt-6 text-sm">
-              <p className="text-gray-600">Pour devenir traducteur ou pour faire traduire vos documents, contactez-nous pour plus d'informations.</p>
+              <p className="text-gray-600">Pour devenir traducteur ou pour faire traduire vos documents, contactez-nous pour plus d&apos;informations.</p>
             </div>
           </div>
         </div>

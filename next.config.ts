@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       "lh3.googleusercontent.com",
       "i.pinimg.com",
       "cdn.pixabay.com",
+      'placehold.co',
+      'ui-avatars.com'
     ],
   },
 };

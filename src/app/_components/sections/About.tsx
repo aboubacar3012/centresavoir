@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValueEvent, useInView, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { GraduationCap, Laptop, Users, MessageSquareQuote, ChevronRight, Sparkles } from "lucide-react";
 
 const About = () => {
@@ -40,33 +40,27 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.15
+        delayChildren: 0.2,
+        staggerChildren: 0.1
       }
     }
   };
   
+  // Simplified card variants
   const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
-      y: 0, 
-      scale: 1,
+      y: 0,
       transition: { 
-        type: "spring", 
-        stiffness: 100, 
-        damping: 15,
-        mass: 1
+        duration: 0.5,
+        ease: "easeOut"
       } 
     },
     hover: {
-      y: -12,
-      scale: 1.03,
-      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+      y: -3,
       transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 15 
+        duration: 0.3
       }
     }
   };
@@ -118,13 +112,14 @@ const About = () => {
           variants={fadeInUp}
           className="text-center mb-24"
         >
+          
           <div className="inline-flex items-center justify-center mb-4 px-4 py-2 bg-green-100/60 backdrop-blur-sm rounded-full">
             <Sparkles className="w-4 h-4 mr-2 text-green-600" />
             <span className="text-green-800 font-medium text-sm">Découvrir Notre Centre</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-bold mb-8 text-green-900 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-emerald-600">
-            À Propos du Centre du Savoir
+            À Propos
           </h2>
           
           <motion.div 
@@ -143,6 +138,55 @@ const About = () => {
             Le Centre du Savoir est un établissement d&apos;excellence spécialisé dans la formation en technologies numériques, 
             créant des parcours d&apos;apprentissage innovants pour préparer les talents africains aux défis du monde digital.
           </motion.p>
+          
+          {/* Statistiques */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-wrap justify-center gap-8 md:gap-16 mt-14 mb-6"
+          >
+            <div className="flex flex-col items-center">
+              <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-500 mb-1">2009</span>
+              <span className="text-gray-600 font-medium text-sm">Année de création</span>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500 mb-1"
+              >
+                3000+
+              </motion.span>
+              <span className="text-gray-600 font-medium text-sm">Étudiants formés</span>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500 mb-1"
+              >
+                15+
+              </motion.span>
+              <span className="text-gray-600 font-medium text-sm">Années d&apos;expertise</span>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 1 }}
+                className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500 mb-1"
+              >
+                98%
+              </motion.span>
+              <span className="text-gray-600 font-medium text-sm">Satisfaction étudiant</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Section Nos Valeurs */}
@@ -151,68 +195,80 @@ const About = () => {
           variants={staggerCards}
           initial="hidden"
           animate={isValuesInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-12 mb-32"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-28"
         >
           <motion.div
             variants={cardVariants}
             whileHover="hover"
-            className="group bg-gradient-to-br from-white to-green-50 rounded-3xl p-10 backdrop-blur-sm shadow-[0_15px_30px_-15px_rgba(0,0,0,0.1)] border border-green-100/80"
+            className="group bg-white rounded-xl p-8 border border-green-100"
           >
-            <div className="mb-8">
-              <div className="relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-green-600 to-teal-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-inner shadow-green-600/30">
-                  <GraduationCap className="w-8 h-8 text-white" />
-                </div>
+            <div className="mb-6">
+              <div className="flex items-center justify-center w-14 h-14 bg-green-500 rounded-xl">
+                <GraduationCap className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-800 group-hover:text-green-700 transition-colors">Formation d&apos;Excellence</h3>
-            <p className="text-gray-600 leading-relaxed">Nous offrons des programmes de formation adaptés aux besoins du marché africain avec des méthodes pédagogiques innovantes et un contenu constamment actualisé.</p>
-            <div className="mt-6 flex items-center text-green-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-green-700 transition-colors">Formation d&apos;Excellence</h3>
+            <p className="text-gray-600 leading-relaxed">Nous offrons des programmes de formation adaptés aux besoins du marché africain avec des méthodes pédagogiques innovantes.</p>
+            <div className="mt-4 flex items-center text-green-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-200">
               <span>En savoir plus</span>
-              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+              <ChevronRight className="w-4 h-4 ml-1" />
             </div>
           </motion.div>
           
           <motion.div
             variants={cardVariants}
             whileHover="hover"
-            className="group bg-gradient-to-br from-white to-blue-50 rounded-3xl p-10 backdrop-blur-sm shadow-[0_15px_30px_-15px_rgba(0,0,0,0.1)] border border-blue-100/80"
+            className="group bg-white rounded-xl p-8 border border-blue-100"
           >
-            <div className="mb-8">
-              <div className="relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-inner shadow-blue-600/30">
-                  <Laptop className="w-8 h-8 text-white" />
-                </div>
+            <div className="mb-6">
+              <div className="flex items-center justify-center w-14 h-14 bg-blue-500 rounded-xl">
+                <Laptop className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-800 group-hover:text-blue-700 transition-colors">Technologies Avancées</h3>
-            <p className="text-gray-600 leading-relaxed">Notre centre est équipé des dernières technologies pour vous offrir une expérience d&apos;apprentissage immersive et des compétences directement applicables.</p>
-            <div className="mt-6 flex items-center text-blue-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-blue-700 transition-colors">Technologies Avancées</h3>
+            <p className="text-gray-600 leading-relaxed">Notre centre est équipé des dernières technologies pour vous offrir une expérience d&apos;apprentissage immersive.</p>
+            <div className="mt-4 flex items-center text-blue-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-200">
               <span>En savoir plus</span>
-              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+              <ChevronRight className="w-4 h-4 ml-1" />
             </div>
           </motion.div>
           
           <motion.div
             variants={cardVariants}
             whileHover="hover"
-            className="group bg-gradient-to-br from-white to-purple-50 rounded-3xl p-10 backdrop-blur-sm shadow-[0_15px_30px_-15px_rgba(0,0,0,0.1)] border border-purple-100/80"
+            className="group bg-white rounded-xl p-8 border border-purple-100"
           >
-            <div className="mb-8">
-              <div className="relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-inner shadow-purple-600/30">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
+            <div className="mb-6">
+              <div className="flex items-center justify-center w-14 h-14 bg-purple-500 rounded-xl">
+                <Users className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-800 group-hover:text-purple-700 transition-colors">Experts Passionnés</h3>
-            <p className="text-gray-600 leading-relaxed">Notre équipe est composée d&apos;experts du secteur qui allient expertise technique et talent pédagogique pour transmettre leur savoir avec passion.</p>
-            <div className="mt-6 flex items-center text-purple-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-purple-700 transition-colors">Experts Passionnés</h3>
+            <p className="text-gray-600 leading-relaxed">Notre équipe est composée d&apos;experts qui allient expertise technique et talent pédagogique pour transmettre leur savoir.</p>
+            <div className="mt-4 flex items-center text-purple-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-200">
               <span>En savoir plus</span>
-              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </div>
+          </motion.div>
+          
+          <motion.div
+            variants={cardVariants}
+            whileHover="hover"
+            className="group bg-white rounded-xl p-8 border border-amber-100"
+          >
+            <div className="mb-6">
+              <div className="flex items-center justify-center w-14 h-14 bg-amber-500 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7 text-white">
+                  <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+                  <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-amber-700 transition-colors">Support Personnalisé</h3>
+            <p className="text-gray-600 leading-relaxed">Un accompagnement sur mesure pour chaque apprenant, avec un suivi continu et des ressources adaptées à votre rythme.</p>
+            <div className="mt-4 flex items-center text-amber-600 font-medium opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <span>En savoir plus</span>
+              <ChevronRight className="w-4 h-4 ml-1" />
             </div>
           </motion.div>
         </motion.div>
@@ -259,18 +315,15 @@ const About = () => {
                           <div className="absolute inset-0 rounded-2xl border-2 border-white/30 transform rotate-3 scale-[1.02]"></div>
                           <div className="absolute inset-0 rounded-2xl border-2 border-white/20 transform -rotate-2 scale-[1.04]"></div>
                           
-                          {/* The actual image */}
+                          {/* The actual image - Updated with Unsplash image */}
                           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl">
                             <Image
-                              src="/director.jpg"
+                              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1287&auto=format&fit=crop"
                               alt="Monsieur Oumar NYAGARA Diallo, Directeur Général"
                               className="object-cover w-full h-full transform hover:scale-105 transition-transform duration-1000"
                               fill
                               sizes="(max-width: 768px) 100vw, 400px"
                               priority
-                              onError={(e) => {
-                                e.currentTarget.src = "https://placehold.co/800x1000/e4f2e8/14532d?text=Directeur";
-                              }}
                             />
                           </div>
                         </div>
@@ -306,9 +359,9 @@ const About = () => {
                       <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-green-500 to-emerald-400"></div>
                       
                       <p className="text-gray-700 italic mb-6 leading-relaxed text-lg relative">
-                        <span className="absolute -top-1 -left-2 text-5xl opacity-20 font-serif text-green-400">"</span>
-                        Le CSILT, créé en 2009, s'est imposé comme leader de la formation en Informatique, Langues et Traduction en Guinée. Notre mission est de préparer les talents africains aux défis du monde numérique avec excellence et innovation.
-                        <span className="absolute -bottom-4 -right-2 text-5xl opacity-20 font-serif text-green-400">"</span>
+                        <span className="absolute -top-1 -left-2 text-5xl opacity-20 font-serif text-green-400">{'"'}</span>
+                        Le CSILT, créé en 2009, s&apos;est imposé comme leader de la formation en Informatique, Langues et Traduction en Guinée. Notre mission est de préparer les talents africains aux défis du monde numérique avec excellence et innovation.
+                        <span className="absolute -bottom-4 -right-2 text-5xl opacity-20 font-serif text-green-400">{'"'}</span>
                       </p>
                       
                       <div className="flex items-center justify-between">
@@ -316,12 +369,8 @@ const About = () => {
                           <h4 className="font-bold text-lg text-green-800">
                             Oumar NYAGARA Diallo
                           </h4>
-                          <p className="text-sm text-gray-600">Fondateur & Directeur Général</p>
+                          <p className="text-sm text-gray-600">Fondateur &amp; Directeur Général</p>
                         </div>
-                        <svg className="h-12 w-auto opacity-40" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10 25C10 15 20 5 40 5C60 5 70 15 70 25C70 35 60 45 40 45C20 45 10 35 10 25Z" stroke="currentColor" strokeWidth="2" />
-                          <path d="M30 20L40 30L50 20" stroke="currentColor" strokeWidth="2" />
-                        </svg>
                       </div>
                     
                       <motion.div
