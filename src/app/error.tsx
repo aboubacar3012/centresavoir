@@ -25,7 +25,7 @@ export default function Error({
 
         <h1 className="text-3xl font-bold text-gray-800 mb-3">Un problème est survenu</h1>
         <p className="text-gray-600 mb-6">
-          Nous sommes désolés, mais il semble qu'une erreur se soit produite. Notre équipe a été informée de ce problème.
+          Nous sommes désolés, mais il semble qu&apos;une erreur se soit produite. Notre équipe a été informée de ce problème.
         </p>
         
         <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -37,7 +37,7 @@ export default function Error({
           </button>
           
           <Link href="/" className="px-6 py-3 border border-gray-300 hover:bg-gray-100 text-gray-700 rounded-lg font-medium transition-colors">
-            Retour à l'accueil
+            Retour à l&apos;accueil
           </Link>
         </div>
       </div>
